@@ -61,17 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Estación de Policía - Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        .section-title {
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .dashboard-card {
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-    </style>
+    <link rel="stylesheet" href="css/supervisorhome.css">
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -286,42 +277,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
-    <!-- Sección de Etacion -->
-    <div class="col-md-12 mb-4">
-            <div class="card dashboard-card">
-                <div class="card-header bg-secondary text-white">
-                    <h5 class="mb-0">Estacion</h5>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Dirección</th>
-                                    <th>Capacidad</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $result = getDatosTabla($conn, 'estacion');
-                                while($row = $result->fetch_assoc()) {
-                                    echo "<tr>";
-                                    echo "<td>{$row['id_estacion']}</td>";
-                                    echo "<td>{$row['nombre_estacion']}</td>";
-                                    echo "<td>{$row['direccion_estacion']}</td>";
-                                    echo "<td>{$row['capacidad_estacion']}</td>";
-                                    echo "</tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+   
 
             <!-- Sección de Evidencias -->
             <div class="col-md-12 mb-4">
@@ -366,7 +322,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
-
+ 
     <!-- Modal para añadir Oficial -->
     <div class="modal fade" id="modalAddOficial" tabindex="-1">
         <div class="modal-dialog">

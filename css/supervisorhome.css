@@ -1,0 +1,141 @@
+.section-title {
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+.dashboard-card {
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+body {
+    background-color: #f4f4f4;
+    background-image: url(../img/supervisorhomeback.png);
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+/* Estilos generales */
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f4f4f4;
+    background-image: url(../img/supervisorhomeback.png);
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    color: #333;
+}
+
+/* Estilos de la sección de títulos */
+.section-title {
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #007bff;
+    font-weight: bold;
+    font-size: 1.8rem;
+}
+
+/* Estilos de la barra de navegación */
+.navbar {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #007bff;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #fff;
+}
+
+.navbar-text {
+    color: #fff;
+}
+
+.navbar-text .badge {
+    font-size: 0.8rem;
+    vertical-align: middle;
+    background-color: #fff;
+    color: #007bff;
+}
+
+/* Estilos de las tarjetas */
+.dashboard-card {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+    margin-bottom: 20px;
+    background-color: #fff;
+}
+
+.dashboard-card:hover {
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.dashboard-card .card-header {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+}
+
+.dashboard-card .card-body {
+    padding: 1.5rem;
+}
+
+/* Estilos de los botones */
+.btn-sm {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.btn-sm:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Estilos de las tablas */
+.table {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+/* Estilos de las alertas */
+.alert {
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+/* Estilos de los modales */
+.modal-content {
+    border-radius: 8px;
+}
+
+.modal-header, .modal-footer {
+    background-color: #f8f9fa;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+/* Estilos responsivos */
+@media (max-width: 767.98px) {
+    .dashboard-card .card-body {
+        padding: 1rem;
+    }
+
+    .table {
+        font-size: 0.8rem;
+    }
+}
