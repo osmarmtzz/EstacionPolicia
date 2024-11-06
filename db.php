@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // El oficial existe, guardar datos en sesión
         $oficial = $result->fetch_assoc();
         $_SESSION['oficial'] = $oficial;
-        header("Location: home.php");
+        header("Location: oficialhome.php");
         exit();
     } else {
         // El oficial no existe, redirigir de vuelta al index.php con mensaje de error
