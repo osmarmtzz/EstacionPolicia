@@ -286,6 +286,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
+    <!-- Sección de Etacion -->
+    <div class="col-md-12 mb-4">
+            <div class="card dashboard-card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Estacion</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Dirección</th>
+                                    <th>Capacidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $result = getDatosTabla($conn, 'estacion');
+                                while($row = $result->fetch_assoc()) {
+                                    echo "<tr>";
+                                    echo "<td>{$row['id_estacion']}</td>";
+                                    echo "<td>{$row['nombre_estacion']}</td>";
+                                    echo "<td>{$row['direccion_estacion']}</td>";
+                                    echo "<td>{$row['capacidad_estacion']}</td>";
+                                    echo "</tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
             <!-- Sección de Evidencias -->
             <div class="col-md-12 mb-4">
                 <div class="card dashboard-card">
