@@ -1,0 +1,110 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('img/fondo_login.png');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+.login-container {
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.6s forwards;
+    font-family: "Outfit", sans-serif;
+}
+
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 100px; /* Adjust logo size */
+    height: auto;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #004080;
+    font-size: 1.8em;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+label {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+    text-align: left; /* Align label to the left */
+    padding-left: 5px;
+}
+
+input[type="text"] {
+    width: 95%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    font-size: 17px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #0055cc;
+    outline: none;
+}
+
+.btn-login {
+    background-color: #0055cc;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-login:hover {
+    background-color: #004080;
+    transform: scale(1.05);
+}
+
+.error-message {
+    color: #cc0000;
+    font-size: 15px;
+    margin-top: 12px;
+    display: none;
+}
+
+.error-message.active {
+    display: block;
+    animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
