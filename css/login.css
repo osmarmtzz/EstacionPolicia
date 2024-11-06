@@ -6,7 +6,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-image: url('img/fondo_login.png');
+    background-image: url(../img/fondo_login.png);
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
