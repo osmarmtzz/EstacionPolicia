@@ -25,6 +25,32 @@ function getDatosTabla($conn, $tabla) {
     return $conn->query($sql);
 }
 
+// Procesar formularios de inserción
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['add_oficial'])) {
+        $nombre = $_POST['nombre_oficial'];
+        $rango = $_POST['rango_oficial'];
+        $años = $_POST['años_servicio'];
+        $estacion = $_POST['id_estacion'];
+        
+        $sql = "INSERT INTO oficial (nombre_oficial, rango_oficial, años_servicio_oficial, id_estacion) 
+                VALUES ('$nombre', '$rango', $años, $estacion)";
+        $conn->query($sql);
+    }
+    elseif (isset($_POST['add_caso'])) {
+        $descripcion = $_POST['descripcion_caso'];
+        $fecha = $_POST['fecha_creacion'];
+        $estado = $_POST['estado_caso'];
+        $estacion = $_POST['id_estacion'];
+        
+        $sql = "INSERT INTO caso (descripcion_caso, fecha_creacion_caso, estado_caso, id_estacion) 
+                VALUES ('$descripcion', '$fecha', '$estado', $estacion)";
+        $conn->query($sql);
+    }
+    // Recargar la página para mostrar los nuevos datos
+    header("Location: oficialhome.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -36,19 +62,38 @@ function getDatosTabla($conn, $tabla) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/supervisorhome.css">
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <!-- Contenido de la barra de navegación -->
+    <div class="container">
+        <a class="navbar-brand" href="#">Estación de Policía</a>
+        <div class="navbar-text text-white ms-auto d-flex align-items-center">
+            <span class="me-3">
+                <i class="fas fa-user me-2"></i>
+                <?php echo htmlspecialchars($oficial['nombre_oficial']); ?> 
+                <span class="badge bg-light text-dark ms-2">ID: <?php echo htmlspecialchars($oficial['id_oficial']); ?></span>
+            </span>
+            <form method="POST" action="logout.php">
+                <button type="submit" class="btn btn-outline-light btn-sm">
+                    <i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión
+                </button>
+            </form>
+        </div>
+    </div>
 </nav>
 
-<div class="container mt-4">
-    <div class="row">
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Sección de Oficiales -->
         <!-- Sección de Oficiales -->
         <div class="col-md-12 mb-4">
             <div class="card dashboard-card">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Oficiales</h5>
+                    <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddOficial">
+                            <i class="fas fa-plus"></i> Añadir Oficial
+                        </button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -92,6 +137,9 @@ function getDatosTabla($conn, $tabla) {
             <div class="card dashboard-card">
                 <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Casos</h5>
+                    <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddCaso">
+                            <i class="fas fa-plus"></i> Añadir Oficial
+                        </button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -117,8 +165,8 @@ function getDatosTabla($conn, $tabla) {
                                     echo "<td>{$row['estado_caso']}</td>";
                                     echo "<td>{$row['id_estacion']}</td>";
                                     echo "<td>
-                                            <a href='editar_caso.php?id={$row['id_caso']}' class='btn btn-sm btn-primary'>Editar</a>
-                                            <a href='eliminar_caso.php?id={$row['id_caso']}' class='btn btn-sm btn-danger'>Eliminar</a>
+                                            <a href='casos/editar_casos.php?id={$row['id_caso']}' class='btn btn-sm btn-primary'>Editar</a>
+                                            <a href='casos/eliminar_casos.php?id={$row['id_caso']}' class='btn btn-sm btn-danger'>Eliminar</a>
                                         </td>";
                                     echo "</tr>";
                                 }
@@ -135,6 +183,9 @@ function getDatosTabla($conn, $tabla) {
             <div class="card dashboard-card">
                 <div class="card-header bg-warning text-dark">
                     <h5 class="mb-0">Delitos</h5>
+                    <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddDelitos">
+                            <i class="fas fa-plus"></i> Añadir Oficial
+                        </button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -176,6 +227,9 @@ function getDatosTabla($conn, $tabla) {
             <div class="card dashboard-card">
                 <div class="card-header bg-danger text-white">
                     <h5 class="mb-0">Víctimas</h5>
+                    <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddOficial">
+                            <i class="fas fa-plus"></i> Añadir Oficial
+                        </button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

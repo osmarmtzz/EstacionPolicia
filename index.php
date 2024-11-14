@@ -1,8 +1,8 @@
 <?php
 session_start();
-// Si ya hay una sesión activa, redirigir a home.php
+// Si ya hay una sesión activa, redirigir 
 if (isset($_SESSION['oficial'])) {
-    header("Location: home.php");
+    header("Location: oficialhome.php");
     exit();
 }
 ?>
