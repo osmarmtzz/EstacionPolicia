@@ -27,8 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("i", $id_oficial);
 
     if ($stmt->execute()) {
-        // After deletion, redirect to oficialhome.php
-        header("Location: ../oficialhome.php");
+        // After deletion, redirect to supervisorhome.php
+        header("Location: ../supervisorhome.php");
         exit();
     } else {
         echo "Error al eliminar el oficial: " . $conn->error;
@@ -79,7 +79,7 @@ $conn->close();
                 <input type="text" class="form-control" id="id_estacion" name="id_estacion" value="<?php echo $oficial_data['id_estacion']; ?>" disabled>
             </div>
             <button type="submit" class="btn btn-danger">Eliminar</button>
-            <a href="../oficialhome.php" class="btn btn-secondary">Cancelar</a>
+            <a href="../supervisorhome.php" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 </body>

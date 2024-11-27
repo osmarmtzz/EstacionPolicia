@@ -2,7 +2,7 @@
 session_start();
 // Si ya hay una sesión activa, redirigir 
 if (isset($_SESSION['oficial'])) {
-    header("Location: oficialhome.php");
+    header("Location: supervisorhome.php");
     exit();
 }
 ?>

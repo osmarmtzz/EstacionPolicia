@@ -31,8 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssii", $nombre_oficial, $rango_oficial, $años_servicio_oficial, $id_estacion, $id_oficial);
 
     if ($stmt->execute()) {
-        // Redirect to ../oficialhome.php after successful update
-        header("Location: ../oficialhome.php");
+        // Redirect to ../supervisorhome.php after successful update
+        header("Location: ../supervisorhome.php");
         exit();
     } else {
         echo "Error al actualizar el oficial: " . $conn->error;
@@ -83,7 +83,7 @@ $conn->close();
                 <input type="text" class="form-control" id="id_estacion" name="id_estacion" value="<?php echo $oficial_data['id_estacion']; ?>" required>
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <a href="../oficialhome.php" class="btn btn-secondary">Cancelar</a>
+            <a href="../supervisorhome.php" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 </body>

@@ -26,7 +26,9 @@ function getDatosTabla($conn, $tabla) {
 }
 
 // Procesar formularios de inserción
+// Procesar formularios de inserción
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Insertar nuevo oficial
     if (isset($_POST['add_oficial'])) {
         $nombre = $_POST['nombre_oficial'];
         $rango = $_POST['rango_oficial'];
@@ -37,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 VALUES ('$nombre', '$rango', $años, $estacion)";
         $conn->query($sql);
     }
+    // Insertar nuevo caso
     elseif (isset($_POST['add_caso'])) {
         $descripcion = $_POST['descripcion_caso'];
         $fecha = $_POST['fecha_creacion'];
@@ -47,11 +50,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 VALUES ('$descripcion', '$fecha', '$estado', $estacion)";
         $conn->query($sql);
     }
+    // Insertar nuevo delito
+    elseif (isset($_POST['add_delito'])) {
+        $nombre_delito = $_POST['nombre_delito'];
+        $descripcion_delito = $_POST['descripcion_delito'];
+        $categoria_delito = $_POST['categoria_delito'];
+
+        $sql = "INSERT INTO delito (nombre_delito, descripcion_delito, categoria_delito) 
+                VALUES ('$nombre_delito', '$descripcion_delito', '$categoria_delito')";
+        
+        if ($conn->query($sql) === TRUE) {
+            header("Location: supervisorhome.php");  // Redirige a la página de delitos
+            exit();
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    }
+    // Insertar nueva víctima
+    elseif (isset($_POST['add_victima'])) {
+        $nombre_victima = $_POST['nombre_victima'];
+        $direccion_victima = $_POST['direccion_victima'];
+        $estado_seguridad_victima = $_POST['estado_seguridad_victima'];
+
+        $sql = "INSERT INTO victima (nombre_victima, direccion_victima, estado_seguridad_victima) 
+                VALUES ('$nombre_victima', '$direccion_victima', '$estado_seguridad_victima')";
+        
+        if ($conn->query($sql) === TRUE) {
+            // Si la inserción es exitosa, redirigir o mostrar mensaje de éxito
+            header("Location: supervisorhome.php");  // Redirige a la página de víctimas
+            exit();
+        } else {
+            // Si hay un error en la consulta
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    }
+    
     // Recargar la página para mostrar los nuevos datos
-    header("Location: oficialhome.php");
+    header("Location: supervisorhome.php");  // Cambia esta URL por la correcta en tu proyecto
     exit();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -178,93 +217,93 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
 
-        <!-- Sección de Delitos -->
-        <div class="col-md-12 mb-4">
-            <div class="card dashboard-card">
-            <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Casos</h5>
-                    <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddDelito">
-                            <i class="fas fa-plus"></i> Añadir Delito
-                        </button>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Descripción</th>
-                                    <th>Categoría</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $result = getDatosTabla($conn, 'delito');
-                                while($row = $result->fetch_assoc()) {
-                                    echo "<tr>";
-                                    echo "<td>{$row['id_delito']}</td>";
-                                    echo "<td>{$row['nombre_delito']}</td>";
-                                    echo "<td>{$row['descripcion_delito']}</td>";
-                                    echo "<td>{$row['categoria_delito']}</td>";
-                                    echo "<td>
-                                            <a href='editar_delito.php?id={$row['id_delito']}' class='btn btn-sm btn-primary'>Editar</a>
-                                            <a href='eliminar_delito.php?id={$row['id_delito']}' class='btn btn-sm btn-danger'>Eliminar</a>
-                                        </td>";
-                                    echo "</tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+       <!-- Sección de Delitos -->
+<div class="col-md-12 mb-4">
+    <div class="card dashboard-card">
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Delitos</h5>
+            <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddDelito">
+                <i class="fas fa-plus"></i> Añadir Delito
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Categoría</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $result = getDatosTabla($conn, 'delito');
+                        while($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>{$row['id_delito']}</td>";
+                            echo "<td>{$row['nombre_delito']}</td>";
+                            echo "<td>{$row['descripcion_delito']}</td>";
+                            echo "<td>{$row['categoria_delito']}</td>";
+                            echo "<td>
+                                    <a href='delitos/editar_delitos.php?id={$row['id_delito']}' class='btn btn-sm btn-primary'>Editar</a>
+                                    <a href='delitos/eliminar_delitos.php?id={$row['id_delito']}' class='btn btn-sm btn-danger'>Eliminar</a>
+                                </td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
+</div>
 
-        <!-- Sección de Víctimas -->
-        <div class="col-md-12 mb-4">
-            <div class="card dashboard-card">
-                <div class="card-header bg-danger text-white">
-                    <h5 class="mb-0">Víctimas</h5>
-                    <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddOficial">
-                            <i class="fas fa-plus"></i> Añadir Oficial
-                        </button>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Dirección</th>
-                                    <th>Estado de Seguridad</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $result = getDatosTabla($conn, 'victima');
-                                while($row = $result->fetch_assoc()) {
-                                    echo "<tr>";
-                                    echo "<td>{$row['id_victima']}</td>";
-                                    echo "<td>{$row['nombre_victima']}</td>";
-                                    echo "<td>{$row['direccion_victima']}</td>";
-                                    echo "<td>{$row['estado_seguridad_victima']}</td>";
-                                    echo "<td>
-                                            <a href='editar_victima.php?id={$row['id_victima']}' class='btn btn-sm btn-primary'>Editar</a>
-                                            <a href='eliminar_victima.php?id={$row['id_victima']}' class='btn btn-sm btn-danger'>Eliminar</a>
-                                        </td>";
-                                    echo "</tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+       <!-- Sección de Víctimas -->
+<div class="col-md-12 mb-4">
+    <div class="card dashboard-card">
+        <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Víctimas</h5>
+            <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddVictima">
+                <i class="fas fa-plus"></i> Añadir Víctima
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Dirección</th>
+                            <th>Estado de Seguridad</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $result = getDatosTabla($conn, 'victima');
+                        while($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>{$row['id_victima']}</td>";
+                            echo "<td>{$row['nombre_victima']}</td>";
+                            echo "<td>{$row['direccion_victima']}</td>";
+                            echo "<td>{$row['estado_seguridad_victima']}</td>";
+                            echo "<td>
+                                    <a href='victimas/editar_victimas.php?id={$row['id_victima']}' class='btn btn-sm btn-primary'>Editar</a>
+                                    <a href='victimas/eliminar_victimas.php?id={$row['id_victima']}' class='btn btn-sm btn-danger'>Eliminar</a>
+                                </td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
+</div>
 
         <!-- Sección de Sospechosos -->
         <div class="col-md-12 mb-4">
@@ -294,8 +333,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     echo "<td>{$row['direccion_sospechoso']}</td>";
                                     echo "<td>{$row['estado_arresto_sospechoso']}</td>";
                                     echo "<td>
-                                            <a href='editar_sospechoso.php?id={$row['id_sospechoso']}' class='btn btn-sm btn-primary'>Editar</a>
-                                            <a href='eliminar_sospechoso.php?id={$row['id_sospechoso']}' class='btn btn-sm btn-danger'>Eliminar</a>
+                                            <a href='sospechosos/editar_sospechoso.php?id={$row['id_sospechoso']}' class='btn btn-sm btn-primary'>Editar</a>
+                                            <a href='sospechosos/eliminar_sospechoso.php?id={$row['id_sospechoso']}' class='btn btn-sm btn-danger'>Eliminar</a>
                                         </td>";
                                     echo "</tr>";
                                 }
@@ -341,8 +380,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     echo "<td>{$row['id_caso']}</td>";
                                     echo "<td>{$row['id_oficial']}</td>";
                                     echo "<td>
-                                            <a href='editar_evidencia.php?id={$row['id_evidencia']}' class='btn btn-sm btn-primary'>Editar</a>
-                                            <a href='eliminar_evidencia.php?id={$row['id_evidencia']}' class='btn btn-sm btn-danger'>Eliminar</a>
+                                            <a href='evidencia/editar_evidencia.php?id={$row['id_evidencia']}' class='btn btn-sm btn-primary'>Editar</a>
+                                            <a href='evidencia/eliminar_evidencia.php?id={$row['id_evidencia']}' class='btn btn-sm btn-danger'>Eliminar</a>
                                         </td>";
                                     echo "</tr>";
                                 }
@@ -447,47 +486,71 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <!-- Modal para añadir Delito -->
-<div class="modal fade" id="modalAddOficial" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Añadir Nuevo Oficial</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <form method="POST">
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label">Nombre</label>
-                            <input type="text" class="form-control" name="nombre_oficial" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Rango</label>
-                            <input type="text" class="form-control" name="rango_oficial" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Años de Servicio</label>
-                            <input type="number" class="form-control" name="años_servicio" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Estación</label>
-                            <select class="form-control" name="id_estacion" required>
-                                <?php
-                                $result = getDatosTabla($conn, 'estacion');
-                                while($row = $result->fetch_assoc()) {
-                                    echo "<option value='{$row['id_estacion']}'>{$row['nombre_estacion']}</option>";
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" name="add_oficial" class="btn btn-primary">Guardar</button>
-                    </div>
-                </form>
+<div class="modal fade" id="modalAddDelito" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Añadir Nuevo Delito</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
+            <form method="POST">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre del Delito</label>
+                        <input type="text" class="form-control" name="nombre_delito" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Descripción</label>
+                        <textarea class="form-control" name="descripcion_delito" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Categoría</label>
+                        <input type="text" class="form-control" name="categoria_delito" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" name="add_delito" class="btn btn-success">Guardar</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
+<!-- Modal para añadir Víctima -->
+<div class="modal fade" id="modalAddVictima" tabindex="-1" aria-labelledby="modalAddVictimaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAddVictimaLabel">Añadir Nueva Víctima</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <form method="POST">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" name="nombre_victima" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Dirección</label>
+                        <input type="text" class="form-control" name="direccion_victima" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Estado de Seguridad</label>
+                        <select class="form-control" name="estado_seguridad_victima" required>
+                            <option value="Protegida">Protegida</option>
+                            <option value="En riesgo">En riesgo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" name="add_victima" class="btn btn-danger">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

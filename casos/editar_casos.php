@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssii", $descripcion_caso, $fecha_creacion_caso, $estado_caso, $id_estacion, $id_caso);
 
     if ($stmt->execute()) {
-        header("Location: ../oficialhome.php");
+        header("Location: ../supervisorhome.php");
         exit();
     } else {
         echo "Error al actualizar el caso: " . $conn->error;
@@ -86,7 +86,7 @@ $conn->close();
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <a href="../oficialhome.php" class="btn btn-secondary">Cancelar</a>
+            <a href="../supervisorhome.php" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 </body>
