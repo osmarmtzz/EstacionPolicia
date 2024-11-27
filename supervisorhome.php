@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['oficial'])) {
+if (!isset($_SESSION['supervisor'])) {
     header("Location: index.php");
     exit();
 }
 
-$oficial = $_SESSION['oficial'];
+$oficial = $_SESSION['supervisor'];
 
 $servername = "localhost";
 $username = "root";
@@ -19,13 +19,24 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
+// Recuperar datos del supervisor
+$id_supervisor = $_SESSION['supervisor']; // Asegúrate de que esta sesión esté correcta
+$sql_supervisor = "SELECT * FROM supervisor WHERE id_supervisor = '$id_supervisor'";
+$result_supervisor = $conn->query($sql_supervisor);
+
+if ($result_supervisor->num_rows > 0) {
+    $supervisor = $result_supervisor->fetch_assoc(); // Recuperar los datos del supervisor
+} else {
+    echo "Supervisor no encontrado.";
+    exit();
+}
+
 // Función para obtener datos de cualquier tabla
 function getDatosTabla($conn, $tabla) {
     $sql = "SELECT * FROM $tabla";
     return $conn->query($sql);
 }
 
-// Procesar formularios de inserción
 // Procesar formularios de inserción
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Insertar nuevo oficial
@@ -76,21 +87,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 VALUES ('$nombre_victima', '$direccion_victima', '$estado_seguridad_victima')";
         
         if ($conn->query($sql) === TRUE) {
-            // Si la inserción es exitosa, redirigir o mostrar mensaje de éxito
             header("Location: supervisorhome.php");  // Redirige a la página de víctimas
             exit();
         } else {
-            // Si hay un error en la consulta
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
     }
-    
+
     // Recargar la página para mostrar los nuevos datos
     header("Location: supervisorhome.php");  // Cambia esta URL por la correcta en tu proyecto
     exit();
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -101,17 +109,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/supervisorhome.css">
-
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="#">Estación de Policía</a>
         <div class="navbar-text text-white ms-auto d-flex align-items-center">
             <span class="me-3">
                 <i class="fas fa-user me-2"></i>
-                <?php echo htmlspecialchars($oficial['nombre_oficial']); ?> 
-                <span class="badge bg-light text-dark ms-2">ID: <?php echo htmlspecialchars($oficial['id_oficial']); ?></span>
+                <?php echo htmlspecialchars($supervisor['nombre_supervisor']); ?>
+                <span class="badge bg-light text-dark ms-2">ID: <?php echo htmlspecialchars($supervisor['id_supervisor']); ?></span>
             </span>
             <form method="POST" action="logout.php">
                 <button type="submit" class="btn btn-outline-light btn-sm">

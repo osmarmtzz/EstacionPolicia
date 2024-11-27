@@ -1,8 +1,13 @@
 <?php
 session_start();
-// Si ya hay una sesión activa, redirigir 
-if (isset($_SESSION['oficial'])) {
-    header("Location: supervisorhome.php");
+
+// Si ya hay una sesión activa de supervisor u oficial, redirigir
+if (isset($_SESSION['supervisor']) || isset($_SESSION['oficial'])) {
+    if (isset($_SESSION['supervisor'])) {
+        header("Location: supervisorhome.php");
+    } else {
+        header("Location: oficialhome.php");
+    }
     exit();
 }
 ?>
@@ -29,9 +34,11 @@ if (isset($_SESSION['oficial'])) {
             <input type="text" name="officer_id" id="officer_id" placeholder="Ingresa tu ID de oficial" required>
             <button type="submit" class="btn-login">Iniciar Sesión</button>
         </form>
-        <div id="error-message" class="error-message">
-            ID de oficial incorrecto.
-        </div>
+        <?php if (isset($_GET['error'])): ?>
+            <div id="error-message" class="error-message">
+                ID de oficial incorrecto.
+            </div>
+        <?php endif; ?>
     </div>
 
     <script>

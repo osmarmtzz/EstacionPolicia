@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['oficial'])) {
+if (!isset($_SESSION['supervisor'])) {
     header("Location: index.php");
     exit();
 }
 
-$oficial = $_SESSION['oficial'];
+$supervisor = $_SESSION['supervisor'];
 
 $servername = "localhost";
 $username = "root";
