@@ -138,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Casos</h5>
                     <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddCaso">
-                            <i class="fas fa-plus"></i> Añadir Oficial
+                            <i class="fas fa-plus"></i> Añadir Caso
                         </button>
                 </div>
                 <div class="card-body">
@@ -181,10 +181,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Sección de Delitos -->
         <div class="col-md-12 mb-4">
             <div class="card dashboard-card">
-                <div class="card-header bg-warning text-dark">
-                    <h5 class="mb-0">Delitos</h5>
-                    <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddDelitos">
-                            <i class="fas fa-plus"></i> Añadir Oficial
+            <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Casos</h5>
+                    <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddDelito">
+                            <i class="fas fa-plus"></i> Añadir Delito
                         </button>
                 </div>
                 <div class="card-body">
@@ -440,6 +440,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" name="add_caso" class="btn btn-success">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para añadir Delito -->
+<div class="modal fade" id="modalAddOficial" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Añadir Nuevo Oficial</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form method="POST">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" name="nombre_oficial" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Rango</label>
+                            <input type="text" class="form-control" name="rango_oficial" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Años de Servicio</label>
+                            <input type="number" class="form-control" name="años_servicio" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Estación</label>
+                            <select class="form-control" name="id_estacion" required>
+                                <?php
+                                $result = getDatosTabla($conn, 'estacion');
+                                while($row = $result->fetch_assoc()) {
+                                    echo "<option value='{$row['id_estacion']}'>{$row['nombre_estacion']}</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" name="add_oficial" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>
