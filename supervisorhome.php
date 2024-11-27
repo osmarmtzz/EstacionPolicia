@@ -6,7 +6,7 @@ if (!isset($_SESSION['supervisor'])) {
     exit();
 }
 
-$oficial = $_SESSION['supervisor'];
+$supervisor = $_SESSION['supervisor'];
 
 $servername = "localhost";
 $username = "root";
@@ -116,6 +116,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
         <a class="navbar-brand" href="#">Estación de Policía</a>
         <div class="navbar-text text-white ms-auto d-flex align-items-center">
+        <a class="navbar-brand" href="#">Supervisor</a>
+
             <span class="me-3">
                 <i class="fas fa-user me-2"></i>
                 <?php echo htmlspecialchars($supervisor['nombre_supervisor']); ?>
@@ -133,7 +135,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container mt-4">
         <div class="row">
             <!-- Sección de Oficiales -->
-        <!-- Sección de Oficiales -->
         <div class="col-md-12 mb-4">
             <div class="card dashboard-card">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
