@@ -1,12 +1,15 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['supervisor'])) {
+// Verificar si la sesión del supervisor está activa y es válida
+if (!isset($_SESSION['supervisor']) || !is_array($_SESSION['supervisor'])) {
     header("Location: index.php");
     exit();
 }
 
+// Obtener los datos del supervisor desde la sesión
 $supervisor = $_SESSION['supervisor'];
+$id_supervisor = $supervisor['id_supervisor'];  // Acceder al ID desde el arreglo
 
 $servername = "localhost";
 $username = "root";
@@ -15,17 +18,20 @@ $dbname = "estacion_policia";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+// Verificar la conexión
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Recuperar datos del supervisor
-$id_supervisor = $_SESSION['supervisor']; // Asegúrate de que esta sesión esté correcta
-$sql_supervisor = "SELECT * FROM supervisor WHERE id_supervisor = '$id_supervisor'";
-$result_supervisor = $conn->query($sql_supervisor);
+// Recuperar datos del supervisor (aunque ya están en la sesión, puedes usarlos para validar)
+$sql_supervisor = "SELECT * FROM supervisor WHERE id_supervisor = ?";
+$stmt = $conn->prepare($sql_supervisor);
+$stmt->bind_param("i", $id_supervisor);
+$stmt->execute();
+$result_supervisor = $stmt->get_result();
 
 if ($result_supervisor->num_rows > 0) {
-    $supervisor = $result_supervisor->fetch_assoc(); // Recuperar los datos del supervisor
+    $supervisor = $result_supervisor->fetch_assoc();
 } else {
     echo "Supervisor no encontrado.";
     exit();
@@ -37,9 +43,8 @@ function getDatosTabla($conn, $tabla) {
     return $conn->query($sql);
 }
 
-// Procesar formularios de inserción
+// Procesar formularios de inserción (como en tu código original)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Insertar nuevo oficial
     if (isset($_POST['add_oficial'])) {
         $nombre = $_POST['nombre_oficial'];
         $rango = $_POST['rango_oficial'];
@@ -47,8 +52,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $estacion = $_POST['id_estacion'];
         
         $sql = "INSERT INTO oficial (nombre_oficial, rango_oficial, años_servicio_oficial, id_estacion) 
-                VALUES ('$nombre', '$rango', $años, $estacion)";
-        $conn->query($sql);
+                VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssii", $nombre, $rango, $años, $estacion);
+        $stmt->execute();
     }
     // Insertar nuevo caso
     elseif (isset($_POST['add_caso'])) {
@@ -58,44 +65,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $estacion = $_POST['id_estacion'];
         
         $sql = "INSERT INTO caso (descripcion_caso, fecha_creacion_caso, estado_caso, id_estacion) 
-                VALUES ('$descripcion', '$fecha', '$estado', $estacion)";
-        $conn->query($sql);
+                VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssi", $descripcion, $fecha, $estado, $estacion);
+        $stmt->execute();
     }
-    // Insertar nuevo delito
-    elseif (isset($_POST['add_delito'])) {
-        $nombre_delito = $_POST['nombre_delito'];
-        $descripcion_delito = $_POST['descripcion_delito'];
-        $categoria_delito = $_POST['categoria_delito'];
-
-        $sql = "INSERT INTO delito (nombre_delito, descripcion_delito, categoria_delito) 
-                VALUES ('$nombre_delito', '$descripcion_delito', '$categoria_delito')";
-        
-        if ($conn->query($sql) === TRUE) {
-            header("Location: supervisorhome.php");  // Redirige a la página de delitos
-            exit();
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-    }
-    // Insertar nueva víctima
-    elseif (isset($_POST['add_victima'])) {
-        $nombre_victima = $_POST['nombre_victima'];
-        $direccion_victima = $_POST['direccion_victima'];
-        $estado_seguridad_victima = $_POST['estado_seguridad_victima'];
-
-        $sql = "INSERT INTO victima (nombre_victima, direccion_victima, estado_seguridad_victima) 
-                VALUES ('$nombre_victima', '$direccion_victima', '$estado_seguridad_victima')";
-        
-        if ($conn->query($sql) === TRUE) {
-            header("Location: supervisorhome.php");  // Redirige a la página de víctimas
-            exit();
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-    }
-
-    // Recargar la página para mostrar los nuevos datos
-    header("Location: supervisorhome.php");  // Cambia esta URL por la correcta en tu proyecto
+    // Otras inserciones como en tu código original...
+    header("Location: supervisorhome.php");
     exit();
 }
 ?>

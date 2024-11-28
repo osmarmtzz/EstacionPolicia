@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($supervisor_result->num_rows > 0) {
         // Es un supervisor
         $supervisor = $supervisor_result->fetch_assoc();
-        $_SESSION['supervisor'] = $supervisor['id_supervisor'];  // Almacenar solo el id
+        $_SESSION['supervisor'] = $supervisor;  // Guardar toda la información del supervisor
         $_SESSION['user_type'] = 'supervisor';  // Establecer el tipo de usuario
         header("Location: supervisorhome.php");
         exit();
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($oficial_result->num_rows > 0) {
         // El oficial existe, guardar datos en sesión
         $oficial = $oficial_result->fetch_assoc();
-        $_SESSION['oficial'] = $oficial['id_oficial'];  // Almacenar solo el id
+        $_SESSION['oficial'] = $oficial;  // Guardar toda la información del oficial
         $_SESSION['user_type'] = 'oficial';  // Establecer el tipo de usuario
         header("Location: oficialhome.php");
         exit();
