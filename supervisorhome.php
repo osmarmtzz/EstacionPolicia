@@ -111,101 +111,107 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container mt-4">
         <div class="row">
             <!-- Sección de Oficiales -->
-        <div class="col-md-12 mb-4">
-            <div class="card dashboard-card">
-                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Oficiales</h5>
-                    <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddOficial">
-                            <i class="fas fa-plus"></i> Añadir Oficial
-                        </button>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Rango</th>
-                                    <th>Años de Servicio</th>
-                                    <th>Estación</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $result = getDatosTabla($conn, 'oficial');
-                                while($row = $result->fetch_assoc()) {
-                                    echo "<tr>";
-                                    echo "<td>{$row['id_oficial']}</td>";
-                                    echo "<td>{$row['nombre_oficial']}</td>";
-                                    echo "<td>{$row['rango_oficial']}</td>";
-                                    echo "<td>{$row['años_servicio_oficial']}</td>";
-                                    echo "<td>{$row['id_estacion']}</td>";
-                                    echo "<td>
-                                            <a href='oficial/editar_oficial.php?id={$row['id_oficial']}' class='btn btn-sm btn-primary'>Editar</a>
-                                            <a href='oficial/eliminar_oficial.php?id={$row['id_oficial']}' class='btn btn-sm btn-danger'>Eliminar</a>
-                                        </td>";
-                                    echo "</tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+             
+            <div class="col-md-12 mb-4">
+    <div class="card dashboard-card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 text-white">Oficiales</h5>
+            <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalAddOficial">
+                <i class="fas fa-plus"></i> Añadir Oficial
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr class="text-uppercase">
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Rango</th>
+                            <th>Años de Servicio</th>
+                            <th>Estación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $result = getDatosTabla($conn, 'oficial');
+                        while($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>{$row['id_oficial']}</td>";
+                            echo "<td>{$row['nombre_oficial']}</td>";
+                            echo "<td>{$row['rango_oficial']}</td>";
+                            echo "<td>{$row['años_servicio_oficial']}</td>";
+                            echo "<td>{$row['id_estacion']}</td>";
+                            echo "<td>
+                                    <a href='oficial/editar_oficial.php?id={$row['id_oficial']}' class='btn btn-sm btn-primary'>
+                                        <i class='fas fa-edit'></i> Editar
+                                    </a>
+                                    <a href='oficial/eliminar_oficial.php?id={$row['id_oficial']}' class='btn btn-sm btn-danger'>
+                                        <i class='fas fa-trash'></i> Eliminar
+                                    </a>
+                                  </td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
+</div>
+
 
         <!-- Sección de Casos -->
-        <div class="col-md-12 mb-4">
-            <div class="card dashboard-card">
-                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Casos</h5>
-                    <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddCaso">
-                            <i class="fas fa-plus"></i> Añadir Caso
-                        </button>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Descripción</th>
-                                    <th>Fecha</th>
-                                    <th>Estado</th>
-                                    <th>Estación</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $result = getDatosTabla($conn, 'caso');
-                                while($row = $result->fetch_assoc()) {
-                                    echo "<tr>";
-                                    echo "<td>{$row['id_caso']}</td>";
-                                    echo "<td>{$row['descripcion_caso']}</td>";
-                                    echo "<td>{$row['fecha_creacion_caso']}</td>";
-                                    echo "<td>{$row['estado_caso']}</td>";
-                                    echo "<td>{$row['id_estacion']}</td>";
-                                    echo "<td>
-                                            <a href='casos/editar_casos.php?id={$row['id_caso']}' class='btn btn-sm btn-primary'>Editar</a>
-                                            <a href='casos/eliminar_casos.php?id={$row['id_caso']}' class='btn btn-sm btn-danger'>Eliminar</a>
-                                        </td>";
-                                    echo "</tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-       <!-- Sección de Delitos -->
 <div class="col-md-12 mb-4">
     <div class="card dashboard-card">
         <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Casos</h5>
+            <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddCaso">
+                <i class="fas fa-plus"></i> Añadir Caso
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Descripción</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Estación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $result = getDatosTabla($conn, 'caso');
+                        while($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>{$row['id_caso']}</td>";
+                            echo "<td>{$row['descripcion_caso']}</td>";
+                            echo "<td>{$row['fecha_creacion_caso']}</td>";
+                            echo "<td>{$row['estado_caso']}</td>";
+                            echo "<td>{$row['id_estacion']}</td>";
+                            echo "<td>
+                                    <a href='casos/editar_casos.php?id={$row['id_caso']}' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i>Editar</a>
+                                    <a href='casos/eliminar_casos.php?id={$row['id_caso']}' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i>Eliminar</a>
+                                  </td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de Delitos -->
+<div class="col-md-12 mb-4">
+    <div class="card dashboard-card">
+        <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Delitos</h5>
             <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddDelito">
                 <i class="fas fa-plus"></i> Añadir Delito
@@ -233,9 +239,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             echo "<td>{$row['descripcion_delito']}</td>";
                             echo "<td>{$row['categoria_delito']}</td>";
                             echo "<td>
-                                    <a href='delitos/editar_delitos.php?id={$row['id_delito']}' class='btn btn-sm btn-primary'>Editar</a>
-                                    <a href='delitos/eliminar_delitos.php?id={$row['id_delito']}' class='btn btn-sm btn-danger'>Eliminar</a>
-                                </td>";
+                                    <a href='delitos/editar_delitos.php?id={$row['id_delito']}' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i>Editar</a>
+                                    <a href='delitos/eliminar_delitos.php?id={$row['id_delito']}' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i>Eliminar</a>
+                                  </td>";
                             echo "</tr>";
                         }
                         ?>
@@ -246,10 +252,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </div>
 
-       <!-- Sección de Víctimas -->
+<!-- Sección de Víctimas -->
 <div class="col-md-12 mb-4">
     <div class="card dashboard-card">
-        <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+        <div class="card-header bg-warning text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Víctimas</h5>
             <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddVictima">
                 <i class="fas fa-plus"></i> Añadir Víctima
@@ -277,9 +283,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             echo "<td>{$row['direccion_victima']}</td>";
                             echo "<td>{$row['estado_seguridad_victima']}</td>";
                             echo "<td>
-                                    <a href='victimas/editar_victimas.php?id={$row['id_victima']}' class='btn btn-sm btn-primary'>Editar</a>
-                                    <a href='victimas/eliminar_victimas.php?id={$row['id_victima']}' class='btn btn-sm btn-danger'>Eliminar</a>
-                                </td>";
+                                    <a href='victimas/editar_victimas.php?id={$row['id_victima']}' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i>Editar</a>
+                                    <a href='victimas/eliminar_victimas.php?id={$row['id_victima']}' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i>Eliminar</a>
+                                  </td>";
                             echo "</tr>";
                         }
                         ?>
@@ -290,95 +296,102 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </div>
 
-        <!-- Sección de Sospechosos -->
-        <div class="col-md-12 mb-4">
-            <div class="card dashboard-card">
-                <div class="card-header bg-secondary text-white">
-                    <h5 class="mb-0">Sospechosos</h5>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Dirección</th>
-                                    <th>Estado de Arresto</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $result = getDatosTabla($conn, 'sospechoso');
-                                while($row = $result->fetch_assoc()) {
-                                    echo "<tr>";
-                                    echo "<td>{$row['id_sospechoso']}</td>";
-                                    echo "<td>{$row['nombre_sospechoso']}</td>";
-                                    echo "<td>{$row['direccion_sospechoso']}</td>";
-                                    echo "<td>{$row['estado_arresto_sospechoso']}</td>";
-                                    echo "<td>
-                                            <a href='sospechosos/editar_sospechoso.php?id={$row['id_sospechoso']}' class='btn btn-sm btn-primary'>Editar</a>
-                                            <a href='sospechosos/eliminar_sospechoso.php?id={$row['id_sospechoso']}' class='btn btn-sm btn-danger'>Eliminar</a>
-                                        </td>";
-                                    echo "</tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Sección de Evidencias -->
-        <div class="col-md-12 mb-4">
-            <div class="card dashboard-card">
-                <div class="card-header bg-info text-white">
-                    <h5 class="mb-0">Evidencias</h5>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Tipo</th>
-                                    <th>Descripción</th>
-                                    <th>Fecha</th>
-                                    <th>Lugar</th>
-                                    <th>Caso</th>
-                                    <th>Oficial</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $result = getDatosTabla($conn, 'evidencia');
-                                while($row = $result->fetch_assoc()) {
-                                    echo "<tr>";
-                                    echo "<td>{$row['id_evidencia']}</td>";
-                                    echo "<td>{$row['tipo_evidencia']}</td>";
-                                    echo "<td>{$row['descripcion_evidencia']}</td>";
-                                    echo "<td>{$row['fecha_registro_evidencia']}</td>";
-                                    echo "<td>{$row['lugar_recolectada_evidencia']}</td>";
-                                    echo "<td>{$row['id_caso']}</td>";
-                                    echo "<td>{$row['id_oficial']}</td>";
-                                    echo "<td>
-                                            <a href='evidencia/editar_evidencia.php?id={$row['id_evidencia']}' class='btn btn-sm btn-primary'>Editar</a>
-                                            <a href='evidencia/eliminar_evidencia.php?id={$row['id_evidencia']}' class='btn btn-sm btn-danger'>Eliminar</a>
-                                        </td>";
-                                    echo "</tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+       <!-- Sección de Sospechosos -->
+<div class="col-md-12 mb-4">
+    <div class="card dashboard-card">
+        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Sospechosos</h5>
+            <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddSospechoso">
+                <i class="fas fa-plus"></i> Añadir Sospechoso
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Dirección</th>
+                            <th>Estado de Arresto</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $result = getDatosTabla($conn, 'sospechoso');
+                        while($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>{$row['id_sospechoso']}</td>";
+                            echo "<td>{$row['nombre_sospechoso']}</td>";
+                            echo "<td>{$row['direccion_sospechoso']}</td>";
+                            echo "<td>{$row['estado_arresto_sospechoso']}</td>";
+                            echo "<td>
+                                    <a href='sospechosos/editar_sospechoso.php?id={$row['id_sospechoso']}' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i>Editar</a>
+                                    <a href='sospechosos/eliminar_sospechoso.php?id={$row['id_sospechoso']}' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i>Eliminar</a>
+                                  </td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
+
+
+       <!-- Sección de Evidencias -->
+<div class="col-md-12 mb-4">
+    <div class="card dashboard-card">
+        <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Evidencias</h5>
+            <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddEvidencia">
+                <i class="fas fa-plus"></i> Añadir Evidencia
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tipo</th>
+                            <th>Descripción</th>
+                            <th>Fecha</th>
+                            <th>Lugar</th>
+                            <th>Caso</th>
+                            <th>Oficial</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $result = getDatosTabla($conn, 'evidencia');
+                        while($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>{$row['id_evidencia']}</td>";
+                            echo "<td>{$row['tipo_evidencia']}</td>";
+                            echo "<td>{$row['descripcion_evidencia']}</td>";
+                            echo "<td>{$row['fecha_registro_evidencia']}</td>";
+                            echo "<td>{$row['lugar_recolectada_evidencia']}</td>";
+                            echo "<td>{$row['id_caso']}</td>";
+                            echo "<td>{$row['id_oficial']}</td>";
+                            echo "<td>
+                                    <a href='evidencia/editar_evidencia.php?id={$row['id_evidencia']}' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i>Editar</a>
+                                    <a href='evidencia/eliminar_evidencia.php?id={$row['id_evidencia']}' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i>Eliminar</a>
+                                  </td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal para añadir Oficial -->
 <div class="modal fade" id="modalAddOficial" tabindex="-1">
         <div class="modal-dialog">
