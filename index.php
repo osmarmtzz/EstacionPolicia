@@ -30,7 +30,7 @@ if (isset($_SESSION['supervisor']) || isset($_SESSION['oficial'])) {
         </div>
         <h2>Iniciar Sesión</h2>
         <form action="db.php" method="POST">
-            <label for="officer_id">ID del Oficial</label>
+            <label for="officer_id">ID del Oficial o Supervisor</label>
             <input type="text" name="officer_id" id="officer_id" placeholder="Ingresa tu ID de oficial" required>
             <button type="submit" class="btn-login">Iniciar Sesión</button>
         </form>
